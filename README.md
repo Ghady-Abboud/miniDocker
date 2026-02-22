@@ -1,6 +1,6 @@
 # miniDock
 
-A container runtime built from scratch in Go. No Docker, no containerd, no abstractions — just raw Linux kernel primitives doing what they've always done.
+A container runtime built from scratch in Go. No Docker, no containerd, no abstractions, just raw Linux kernel primitives.
 
 ## What it does
 
