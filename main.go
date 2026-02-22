@@ -23,9 +23,16 @@ func main() {
 }
 
 func runChild() error {
-
 	if err := syscall.Mount("", "/", "", syscall.MS_PRIVATE | syscall.MS_REC, ""); err != nil {
 		return fmt.Errorf("make mounts private: %w", err)
+	}
+
+	resolvTarget := alpineRootFS + "etc/resolv.conf"
+	if err := os.WriteFile(resolvTarget, []byte{}, 0644); err != nil {
+		return fmt.Errorf("create resolv.conf: %w", err)
+	}
+	if err := syscall.Mount("/etc/resolv.conf", resolvTarget, "", syscall.MS_BIND, ""); err != nil {
+		return fmt.Errorf("bind mount resolv.conf: %w", err)
 	}
 
 	if err := isolateRootFS(alpineRootFS); err != nil {
